@@ -2,6 +2,11 @@ package com.servicioiphone.chatbot.model;
 
 import jakarta.persistence.*;
 import java.time.Instant;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 
 @Entity
 @Table(name = "users")
