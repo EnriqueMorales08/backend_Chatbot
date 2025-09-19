@@ -11,7 +11,7 @@ VALUES (
 );
 
 -- Mensaje OUT (chatbot responde)
-INSERT INTO chat_message (conversation_id, direction, content, wa_message_id, wa_timestamp, status, created_at)
+INSERT INTO chat_message (conversation_id, direction, content, wa_message_id, wa_timestamp, status, message_type, created_at, updated_at)
 VALUES (
   (SELECT id FROM conversation WHERE contact_id = (SELECT id FROM contact WHERE wa_id = '51987654321')),
   'OUT',
@@ -19,11 +19,13 @@ VALUES (
   'wamid.msg1',
   NOW(),
   'SENT',
+  'text',
+  NOW(),
   NOW()
 );
 
 -- Mensaje IN (cliente responde)
-INSERT INTO chat_message (conversation_id, direction, content, wa_message_id, wa_timestamp, status, created_at)
+INSERT INTO chat_message (conversation_id, direction, content, wa_message_id, wa_timestamp, status, message_type, created_at, updated_at)
 VALUES (
   (SELECT id FROM conversation WHERE contact_id = (SELECT id FROM contact WHERE wa_id = '51987654321')),
   'IN',
@@ -31,11 +33,13 @@ VALUES (
   'wamid.msg2',
   NOW(),
   'SENT',
+  'text',
+  NOW(),
   NOW()
 );
 
 -- Otro mensaje IN (detalle del cliente)
-INSERT INTO chat_message (conversation_id, direction, content, wa_message_id, wa_timestamp, status, created_at)
+INSERT INTO chat_message (conversation_id, direction, content, wa_message_id, wa_timestamp, status, message_type, created_at, updated_at)
 VALUES (
   (SELECT id FROM conversation WHERE contact_id = (SELECT id FROM contact WHERE wa_id = '51987654321')),
   'IN',
@@ -43,5 +47,7 @@ VALUES (
   'wamid.msg3',
   NOW(),
   'SENT',
+  'text',
+  NOW(),
   NOW()
 );

@@ -3,6 +3,7 @@ package com.servicioiphone.chatbot.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 
@@ -32,6 +33,12 @@ public class Message {
     @Enumerated(EnumType.STRING)
     private MessageStatus status;
 
+    @Column(length = 20)
+    private String messageType; // text, template, etc.
+
     @CreationTimestamp
     private Instant createdAt;
+
+    @UpdateTimestamp
+    private Instant updatedAt;
 }
