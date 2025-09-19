@@ -1,43 +1,27 @@
 package com.servicioiphone.chatbot.model;
+// domain/Contact.java
+
 import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
-
-@Entity
-@Table(name = "contacts")
+@Entity @Table(name="contact")
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class Contact {
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Column(nullable=false, unique=true, length=32)
+  private String waId;              // número WhatsApp en formato internacional, ej: 51920461960
 
-    @ManyToOne @JoinColumn(name="organization_id", nullable=false)
-    private Organization organization;
+  @Column(length=120)
+  private String name;
 
-    @Column(name="full_name", length=120)
-    private String fullName;
-
-    @Column(length=30, unique=true)
-    private String phone;
-
-    @Column(length=150)
-    private String email;
-
-    @Column(name="country_code", length=5)
-    private String countryCode;
-
-    @Column(length=30)
-    private String source;
-
-    @Column(name="created_at", updatable=false)
-    private Instant createdAt;
-
-    @Column(name="updated_at")
-    private Instant updatedAt;
-
-    // Getters y setters
+  @CreationTimestamp
+  private Instant createdAt;
+  @UpdateTimestamp
+  private Instant updatedAt;
 }
+

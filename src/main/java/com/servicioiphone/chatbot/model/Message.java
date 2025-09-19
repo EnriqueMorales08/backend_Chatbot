@@ -1,52 +1,37 @@
 package com.servicioiphone.chatbot.model;
 
 import jakarta.persistence.*;
-import java.time.Instant;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
-@Getter
-@Setter
+import java.time.Instant;
+
 @Entity
-@Table(name = "messages")
+@Table(name = "chat_message", indexes = {
+        @Index(name = "ix_msg_conversation", columnList = "conversation_id, createdAt")
+})
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class Message {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne @JoinColumn(name="organization_id", nullable=false)
-    private Organization organization;
-
-    @ManyToOne @JoinColumn(name="conversation_id", nullable=false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Conversation conversation;
 
-    @ManyToOne @JoinColumn(name="channel_account_id", nullable=false)
-    private ChannelAccount channelAccount;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 4)
+    private Direction direction; // IN o OUT
 
-    @Column(name="from_me", nullable=false)
-    private boolean fromMe;
-
-    @Column(name="provider_message_id", length=120)
-    private String providerMessageId;
-
-    @Column(name="message_type", length=20, nullable=false)
-    private String messageType;
-
-    @Column(columnDefinition="text")
+    @Column(columnDefinition = "text", nullable = false)
     private String content;
 
-    @Column(length=20, nullable=false)
-    private String status = "PENDING";
+    private String waMessageId;   // ID de WhatsApp si lo mandas desde n8n
+    private Instant waTimestamp;  // Timestamp del mensaje en WhatsApp
 
-    @Column(name="error_detail", columnDefinition="text")
-    private String errorDetail;
+    @Enumerated(EnumType.STRING)
+    private MessageStatus status;
 
-    @Column(name="created_at", updatable=false)
+    @CreationTimestamp
     private Instant createdAt;
-
-    @Column(name="updated_at")
-    private Instant updatedAt;
-
-    // Getters y setters
 }

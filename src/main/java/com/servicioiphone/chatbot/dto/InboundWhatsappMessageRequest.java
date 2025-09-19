@@ -1,16 +1,16 @@
 package com.servicioiphone.chatbot.dto;
+
+import com.servicioiphone.chatbot.model.Direction;
+import lombok.Data;
+
 import java.time.Instant;
+
+@Data
 public class InboundWhatsappMessageRequest {
-    public Long organizationId;
-    public Long channelAccountId;
-    public String provider;            // "whatsapp"
-    public String providerMessageId;   // id del mensaje en WhatsApp
-    public String fromPhone;           // cliente
-    public String toPhone;             // tu número WABA
-    public String messageType;         // TEXT, IMAGE, BUTTONS, etc.
-    public String text;                // si aplica
-    public String mediaUrl;            // si aplica
-    public String metadataJson;        // JSON string opcional
-    public String rawPayloadJson;      // JSON string completo
-    public Instant sentAt;             // cuando WhatsApp lo emitió
+    private String waId;        // número WhatsApp
+    private String name;        // nombre del contacto
+    private String mensaje;     // texto del mensaje
+    private Direction direction; // IN o OUT
+    private String waMessageId; // id de WhatsApp
+    private Instant waTimestamp; // timestamp
 }
